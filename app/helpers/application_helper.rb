@@ -1399,4 +1399,25 @@ module ApplicationHelper
       image_tag("https://www.awin1.com/cshow.php?#{query_params}", border: 0)
     end
   end
+  
+  def show_advert
+    now = Time.zone.now
+
+    case now.wday
+    #0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, 4 = Thursday, 5 = Friday, 6 = Saturday
+    when 2 
+      now.hour.between?(11, 13) # 11am to 1pm
+    when 3  
+      now.hour.between?(15, 17) # 3pm to 5pm
+    when 4 
+      now.hour.between?(11, 13) # 11am to 1pm
+    else
+      false
+    end
+  end
+
+  def render_banner(banner_html)
+    return 'Ads not being shown as out of timeframe' unless show_advert
+    banner_html.html_safe
+  end
 end
